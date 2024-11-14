@@ -12,7 +12,7 @@ export class AuthService {
   constructor(private router: Router) {}
 
   isAuthenticated() {
-    this.token = localStorage.getItem('toekn') ?? '';
+    this.token = localStorage.getItem('token') ?? '';
     if (this.token === '') {
       this.router.navigateByUrl('/login');
       return false;

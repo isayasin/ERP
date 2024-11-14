@@ -9,9 +9,7 @@
     <span class="brand-text font-weight-light">IYK ERP</span>
   </a>
 
-  <!-- Sidebar -->
   <div class="sidebar">
-    <!-- Sidebar user (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
         <img
@@ -25,14 +23,13 @@
       </div>
     </div>
 
-    <!-- SidebarSearch Form -->
     <div class="form-inline">
-      <div class="input-group" data-widget="sidebar-search">
+      <div class="input-group">
         <input
           class="form-control form-control-sidebar"
+          [(ngModel)]="search"
           type="search"
           placeholder="Search"
-          aria-label="Search"
         />
         <div class="input-group-append">
           <button class="btn btn-sidebar">
@@ -42,7 +39,6 @@
       </div>
     </div>
 
-    <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul
         class="nav nav-pills nav-sidebar flex-column"
@@ -50,50 +46,49 @@
         role="menu"
         data-accordion="false"
       >
-        <!-- Add icons to the links using the .nav-icon class
-                 with font-awesome or any other icon font library -->
+        @for (menu of menus |menu:search ; track menu) { @if (menu.isTitle) {
+        <li class="nav-header">{{ menu.name }}</li>
+        }@else if (menu.subMenus.length>0) {
         <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
+          <a class="nav-link">
+            <i class="nav-icon {{ menu.icon }}"></i>
             <p>
-              Dashboard
+              {{ menu.name }}
               <i class="right fas fa-angle-left"></i>
             </p>
           </a>
           <ul class="nav nav-treeview">
+            @for (subMenu of menu.subMenus; track subMenu) {
             <li class="nav-item">
-              <a href="assets/index.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Dashboard v1</p>
+              <a
+                [routerLink]="subMenu.url"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                class="nav-link"
+              >
+                <i class="{{ subMenu.icon }} me-2"></i>
+                <p>{{ subMenu.name }}</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="assets/index2.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Dashboard v2</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="assets/index3.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Dashboard v3</p>
-              </a>
-            </li>
+            }
           </ul>
         </li>
-        <li class="nav-header">EXAMPLES</li>
+        }@else {
         <li class="nav-item">
-          <a href="../calendar.html" class="nav-link">
-            <i class="nav-icon far fa-calendar-alt"></i>
+          <a
+            [routerLink]="menu.url"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="nav-link"
+          >
+            <i class="nav-icon {{ menu.icon }}"></i>
             <p>
-              Calendar
-              <span class="badge badge-info right">2</span>
+              {{ menu.name }}
             </p>
           </a>
         </li>
+        } }
       </ul>
     </nav>
-    <!-- /.sidebar-menu -->
   </div>
-  <!-- /.sidebar -->
 </aside>

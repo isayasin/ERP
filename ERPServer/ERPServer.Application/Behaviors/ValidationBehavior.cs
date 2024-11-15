@@ -5,8 +5,8 @@ using MediatR;
 namespace ERPServer.Application.Behavior;
 public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : class, IRequest<TResponse>
 {
-    private readonly IEnumerable<IValidator<IRequest>> _validators;
-    public ValidationBehavior(IEnumerable<IValidator<IRequest>> validators)
+    private readonly IEnumerable<IValidator<TRequest>> _validators;
+    public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
     {
         _validators = validators;
     }

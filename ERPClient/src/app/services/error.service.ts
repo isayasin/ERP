@@ -9,8 +9,6 @@ export class ErrorService {
   constructor(private swal: SwalService) {}
 
   errorHandler(err: HttpErrorResponse) {
-    console.log(err);
-
     if (err.status === 403) {
       let errorMessage = '';
       for (const e of err.error.ErrorMessages) {

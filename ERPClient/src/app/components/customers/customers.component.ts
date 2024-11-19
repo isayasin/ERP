@@ -1,8 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  viewChild,
+} from '@angular/core';
 import { SharedModule } from '../../modules/shared.module';
 import { CustomerModel } from '../../models/customer.model';
 import { HttpService } from '../../services/http.service';
 import { CustomerPipe } from '../../pipes/customer.pipe';
+import { NgForm } from '@angular/forms';
+import { SwalService } from '../../services/swal.service';
 
 @Component({
   selector: 'app-customers',
@@ -13,8 +21,16 @@ import { CustomerPipe } from '../../pipes/customer.pipe';
 })
 export class CustomersComponent implements OnInit {
   customers: CustomerModel[] = [];
-  search: string = "";
-  constructor(private http: HttpService) {}
+  search: string = '';
+
+  @ViewChild('createModalCloseBtn') createModalCloseBtn:
+    | ElementRef<HTMLButtonElement>
+    | undefined;
+
+  createModel: CustomerModel = new CustomerModel();
+  updateModel: CustomerModel = new CustomerModel();
+
+  constructor(private http: HttpService, private swal: SwalService) {}
   ngOnInit(): void {
     this.getAll();
   }
@@ -23,5 +39,16 @@ export class CustomersComponent implements OnInit {
     this.http.post<CustomerModel[]>('Customers/GetAll', {}, (res) => {
       this.customers = res;
     });
+  }
+
+  create(form: NgForm) {
+    if (form.valid) {
+      this.http.post<string>('Customers/Create', this.createModel, (res) => {
+        this.swal.callToast(res);
+        this.createModel = new CustomerModel();
+        this.createModalCloseBtn?.nativeElement.click();
+        this.getAll();
+      });
+    }
   }
 }

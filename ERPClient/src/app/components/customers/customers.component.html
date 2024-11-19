@@ -48,7 +48,10 @@
               <button class="bt btn-outline-primary btn-sm me-1">
                 <i class="fa-solid fa-edit"></i>
               </button>
-              <button class="bt btn-outline-danger btn-sm">
+              <button
+                (click)="deleteById(customer)"
+                class="bt btn-outline-danger btn-sm"
+              >
                 <i class="fa-solid fa-trash"></i>
               </button>
             </td>

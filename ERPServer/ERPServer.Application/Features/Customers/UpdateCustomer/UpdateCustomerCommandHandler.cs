@@ -15,10 +15,10 @@ internal sealed class UpdateCustomerCommandHandler(ICustomerRepository customerR
 
         if (customer == null)
         {
-            Result<string>.Failure("Müşteri bulunamadı!");
+            return Result<string>.Failure("Müşteri bulunamadı!");
         }
 
-        if (customer!.TaxNumber != request.TaxNumber)
+        if (customer.TaxNumber != request.TaxNumber)
         {
             bool isTaxNumberExists = await customerRepository.AnyAsync(p => p.TaxNumber == request.TaxNumber);
             if (isTaxNumberExists)

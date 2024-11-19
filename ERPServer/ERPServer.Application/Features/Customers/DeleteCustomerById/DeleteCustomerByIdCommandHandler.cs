@@ -10,8 +10,8 @@ internal sealed class DeleteCustomerByIdCommandHandler(ICustomerRepository custo
 {
     public async Task<Result<string>> Handle(DeleteCustomerByIdCommand request, CancellationToken cancellationToken)
     {
-        bool hasCustomer = await customerRepository.AnyAsync(p => p.Id == request.Id);
-        if (!hasCustomer)
+        bool isCustomerExist = await customerRepository.AnyAsync(p => p.Id == request.Id);
+        if (!isCustomerExist)
         {
             return Result<string>.Failure("Bu Id sistemlerimizde kayıtlı değil.");
         }

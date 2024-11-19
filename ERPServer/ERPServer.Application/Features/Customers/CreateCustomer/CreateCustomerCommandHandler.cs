@@ -25,14 +25,3 @@ internal sealed class CreateCustomerCommandHandler(ICustomerRepository customerR
         return "Müşteri kaydı başarıyla tamamlandı";
     }
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -26,6 +26,9 @@ export class CustomersComponent implements OnInit {
   @ViewChild('createModalCloseBtn') createModalCloseBtn:
     | ElementRef<HTMLButtonElement>
     | undefined;
+  @ViewChild('updateModalCloseBtn') updateModalCloseBtn:
+    | ElementRef<HTMLButtonElement>
+    | undefined;
 
   createModel: CustomerModel = new CustomerModel();
   updateModel: CustomerModel = new CustomerModel();
@@ -67,5 +70,19 @@ export class CustomersComponent implements OnInit {
         );
       }
     );
+  }
+
+  get(model: CustomerModel) {
+    this.updateModel = { ...model };
+  }
+
+  update(form: NgForm) {
+    if (form.valid) {
+      this.http.post<string>('Customers/Update', this.updateModel, (res) => {
+        this.swal.callToast(res, 'info');
+        this.updateModalCloseBtn?.nativeElement.click();
+        this.getAll();
+      });
+    }
   }
 }

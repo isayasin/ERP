@@ -22,6 +22,6 @@ internal sealed class CreateProductCommandHandler(IProductRepository productRepo
 
         await productRepository.AddAsync(product, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
-        return Result<string>.Succeed(product.Name + "başarıyla kaydedildi.");
+        return Result<string>.Succeed(product.Name + " başarıyla kaydedildi.");
     }
 }
